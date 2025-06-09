@@ -1,1 +1,3 @@
 /target
+# 自分用のビルドスクリプト
+wasm_build.sh
