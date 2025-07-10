@@ -129,6 +129,17 @@ fn analysis_func_call(text: ast::FuncCall) -> String {
     return format!("<!-- no command: {:?} -->", text.callee());
   };
 
+  if s == "\\middle" {
+    let args_vec: Vec<_> = text.args().items().collect();
+    if args_vec.len() != 1 {
+      return format!("<!-- unsupported mid arguments: {:?} -->", text.args());
+    }
+    if let ast::Arg::Pos(expr) = args_vec[0].clone() {
+      return format!("\\,\\middle{}\\,", typst_to_mathjax(expr));
+    }
+    return format!("<!-- unsupported mid argument: {:?} -->", args_vec[0]);
+  }
+
   let args = text
     .args()
     .items()
